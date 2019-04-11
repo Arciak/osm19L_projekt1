@@ -1,14 +1,14 @@
-## osm17L_projekt1
+## osm19L_projekt1
 
 **Przedmiot:** OSM
 
 **Projekt:** 1
 
-**Zadanie:** XX
+**Zadanie:** 18
 
-**Temat:** Xxxx
+**Temat:** Diagnostyka ostrej bia³aczce szpikowej: liczba leukocytów, liczba neutrofili, liczba erytrocytów.
 
-**Zespol:** Xxxx Xxxx, Yyyy Yyyy
+**Zespol:** Agnieszka Grotek, Artur Zarzecki
 
 **Biblioteki:** Xxxx
 
