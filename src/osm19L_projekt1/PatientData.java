@@ -7,7 +7,11 @@ import helpers.GlobalVariables;
  * #2 imie																					   *
  * #3 nazwisko																				   *
  * #4 idNumber_ == numer PESEL																   *	
- * #5 numer ubezpieczenia																	   *	
+ * #5 numer ubezpieczenia																	   *
+ * 																							   *
+ * Klasa posiada funckjce:																	   *
+ * 1. Wypisywanie na ekran danych															   *
+ * 														   									   *	
  * 																							   *
  * klasa dziedziczy po klasie abstarkcyjnej, ktora odpowiada za jego unikalny numer. 		   *
  * Nadpisana zostala funkcja z klasy abstrakcyjnej--> patientNumber							   *	
@@ -19,21 +23,16 @@ public class PatientData extends Patient{
 	private int patientNumber_;
 	private String name_;
 	private String surename_;
-	String idNumber_;
-	private int insurance_; 
+	private String idNumber_;
+	private String insurance_; 
 	
 	
-	public PatientData(int patientNumber_,String name_, String surename_, String idNumber_, int insurance_) {
+	public PatientData(int patientNumber_,String name_, String surename_, String idNumber_, String insurance_) {
 		this.setPatientNumber_(patientNumber_);
 		this.setName_(name_);
 		this.setSurename_(surename_);
 		this.setIdNumber_(idNumber_);
 		this.setInsurance_(insurance_);
-	}
-
-	boolean correctIdNumber(int[] idNumber) {
-		
-		return false;
 	}
 	
 	
@@ -44,18 +43,18 @@ public class PatientData extends Patient{
  * niz standarody numer PESEL zwracany jest wyjatek			  *
  * ************************************************************/
 	public void setIdNumber_(String idNumber_) /*throws IllegalArgumentException */{	
-		if(idNumber_.length()!=GlobalVariables.lengthOfIdNumber){
+		/*if(idNumber_.length()!=GlobalVariables.lengthOfIdNumber){
 			throw new IllegalArgumentException("Zly PESEL");
 		}
-		else this.idNumber_ = idNumber_;
+		else*/ this.idNumber_ = idNumber_;
 	}
 	
 	
-	public int getInsurance_() {
+	public String getInsurance_() {
 		return insurance_;
 	}
 
-	public void setInsurance_(int insurance_) {
+	public void setInsurance_(String insurance_) {
 		this.insurance_ = insurance_;
 	}
 
@@ -90,6 +89,11 @@ public class PatientData extends Patient{
 	int patientNumber(int setNumber_) {
 		// TODO Auto-generated method stub
 		return setNumber_;
+	}
+	
+	
+	public void printPatientData(){
+		System.out.println( patientNumber_+" "+name_+" "+surename_+ " " + idNumber_+ " "+ insurance_);
 	}
 	
 }

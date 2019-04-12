@@ -9,7 +9,6 @@ package helpers;
  */
 
 public class GlobalVariables {
-	
 	public static final int lengthOfIdNumber = 11; //dlugosc numeru PESEL globalna zmienna
 
 }
