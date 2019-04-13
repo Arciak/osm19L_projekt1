@@ -48,7 +48,7 @@ public class DataBase {
 		System.out.print("Podaj numer ubezpieczania: "); patientId.insuranceNumber = inputID.nextLine();
 	}
 	//dodawnie pacjenta do listy
-	void addPatient(){
+	void addPatient() throws IllegalAccessException{
 		enterPatientID();
 		PatientData patientData = new PatientData(patientUniqueNumber_, patientId.name , patientId.sureName , patientId.idNumber, patientId.insuranceNumber);
 		//TestResults testResults = new TestResults(patientUniqueNumber_, 0, 0, 0, 0, 0, 0, 0);
@@ -57,10 +57,15 @@ public class DataBase {
 		++patientUniqueNumber_;
 	}
 	//drukowanie na ekran danych konkretnego pacjenta
-	void printPatient(int patientUniqueNumber){
+	void printPatient(int patientUniqueNumber) throws IllegalAccessException{
 		PatientData patient = (PatientData) mapWithPatientsData.get(patientUniqueNumber);
-		System.out.println("Nr Pacjenta: "+"Imie: "+ "Nazwisko: "+ "Numer PESEL: " + "Ubezpieczenie: ");
-		patient.printPatientData();
+		if(patient == null){
+			throw new IllegalAccessException("Nie ma takiego pacjenta");
+		}
+		else {
+			System.out.println("Nr Pacjenta: "+"Imie: "+ "Nazwisko: "+ "Numer PESEL: " + "Ubezpieczenie: ");
+			patient.printPatientData();
+		}
 	}
 	//pokazanie wsyztskich pacjentow
 	void printAllPatients(){

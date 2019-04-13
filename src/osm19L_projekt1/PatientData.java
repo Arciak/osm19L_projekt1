@@ -27,7 +27,7 @@ public class PatientData extends Patient{
 	private String insurance_; 
 	
 	
-	public PatientData(int patientNumber_,String name_, String surename_, String idNumber_, String insurance_) {
+	public PatientData(int patientNumber_,String name_, String surename_, String idNumber_, String insurance_) throws IllegalAccessException {
 		this.setPatientNumber_(patientNumber_);
 		this.setName_(name_);
 		this.setSurename_(surename_);
@@ -42,11 +42,11 @@ public class PatientData extends Patient{
  * w przypadku kiedy wprowadzony numer jest innej dlugosci 	  *
  * niz standarody numer PESEL zwracany jest wyjatek			  *
  * ************************************************************/
-	public void setIdNumber_(String idNumber_) /*throws IllegalArgumentException */{	
-		/*if(idNumber_.length()!=GlobalVariables.lengthOfIdNumber){
+	public void setIdNumber_(String idNumber_) throws IllegalArgumentException {	
+		if(idNumber_.length()!=GlobalVariables.lengthOfIdNumber){
 			throw new IllegalArgumentException("Zly PESEL");
 		}
-		else*/ this.idNumber_ = idNumber_;
+		else this.idNumber_ = idNumber_;
 	}
 	
 	
@@ -65,8 +65,11 @@ public class PatientData extends Patient{
 		return surename_;
 	}
 
-	public void setSurename_(String surename_) {
-		this.surename_ = surename_;
+	public void setSurename_(String surename_) throws IllegalAccessException {
+		if(surename_ != null && !surename_.trim().isEmpty()){
+			throw new IllegalAccessException("Wprowadz imie");
+		}
+		else this.surename_ = surename_;
 	}
 
 	public String getName_() {

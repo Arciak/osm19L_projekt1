@@ -29,12 +29,20 @@ public class main {
 			
 			switch(chooseMenu){
 				case 1:
+					try{
 					dataBase.addPatient();
+					} catch (IllegalAccessException e) {
+						System.out.println(e);
+					}
 					break;
 				case 2:
 					System.out.println("Podaj numer pacjenta: "); 
 					patientNumber = input.nextInt();
-					dataBase.printPatient(patientNumber);
+					try{
+						dataBase.printPatient(patientNumber);
+					} catch(IllegalAccessException e){
+						System.out.println(e);
+					}
 					break;
 				case 3:
 					dataBase.printAllPatients();
