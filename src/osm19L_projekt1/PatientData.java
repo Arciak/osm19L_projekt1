@@ -27,13 +27,15 @@ import helpers.Exceptions;
 public class PatientData{	
 	private String name_;
 	private String surename_;
+	private String sex_;
 	private String idNumber_;
 	private String insurance_; 
 	
 	
-	public PatientData(String name_, String surename_, String idNumber_, String insurance_) throws Exceptions {
+	public PatientData(String name_, String surename_, String sex_, String idNumber_, String insurance_) throws Exceptions {
 		this.setName_(name_);
 		this.setSurename_(surename_);
+		this.setSex_(sex_);
 		this.setIdNumber_(idNumber_);
 		this.setInsurance_(insurance_);
 	}
@@ -46,16 +48,16 @@ public class PatientData{
  * niz standarody numer PESEL zwracany jest wyjatek			  *
  * ************************************************************/
 	public void setIdNumber_(String idNumber_) throws Exceptions {	
-		Pattern p = Pattern.compile("[a-zA-Z]");
-		Matcher m = p.matcher("AB 45");
-
-		if(idNumber_.length()!=GlobalVariables.lengthOfIdNumber){
+		
+		if (idNumber_.matches("[0-9]+") == true) {
+			this.idNumber_ = idNumber_;
+		}
+		else if(idNumber_.length()!=GlobalVariables.lengthOfIdNumber){
 			throw new Exceptions("Zla dlugosc PESEL");
 		}
-		else if(m.find()){
+		else 
 			throw new Exceptions("Pesel zawiera litery");
-		}
-		else this.idNumber_ = idNumber_;
+		
 	}
 	
 	public String getInsurance_() {
@@ -92,8 +94,21 @@ public class PatientData{
 		else this.name_ = name_;
 	}
 	
+	
+	public String getSex_() {
+		return sex_;
+	}
+
+
+	public void setSex_(String sex_) throws Exceptions{
+		if(sex_ == null || sex_.length() == 0){
+			throw new Exceptions("Wybierz plec");
+		}
+		else this.sex_ = sex_;
+	}
+	
 	public void printPatientData(){
-		System.out.println( name_+" "+surename_+ " " + idNumber_+ " "+ insurance_);
+		System.out.println( name_+" "+surename_+ " " + sex_ + " " + idNumber_+ " "+ insurance_);
 	}
 	
 }

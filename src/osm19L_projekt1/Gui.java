@@ -52,7 +52,9 @@ public class Gui extends JFrame
 		//lPlec.setBounds(20,20,150,20);
 		panelDane.add(lPlec);
 		JRadioButton radioK=new JRadioButton("Kobieta");    
-		JRadioButton radioM=new JRadioButton("Meczyzna");    
+		radioK.setActionCommand("Kobieta");
+		JRadioButton radioM=new JRadioButton("Meczyzna");  
+		radioM.setActionCommand("Mezczyzna");
 		radioK.setBounds(75,50,100,30);    
 		radioM.setBounds(100,50,100,30);    
 		ButtonGroup bg=new ButtonGroup();    
@@ -75,7 +77,7 @@ public class Gui extends JFrame
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try{
-					PatientData newPatientData = new PatientData(tfImie.getText(), tfNazwisko.getText(),tfPesel.getText(), comboUbezpieczenie.getSelectedItem().toString());
+					PatientData newPatientData = new PatientData(tfImie.getText(), tfNazwisko.getText(),"M/K temporary" ,tfPesel.getText(), comboUbezpieczenie.getSelectedItem().toString());
 					dataBase.addPatient(newPatientData);
 					dataBase.printAllPatients();
 					} catch (Exceptions zleNazwisko) {
