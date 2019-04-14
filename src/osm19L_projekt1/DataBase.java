@@ -49,7 +49,7 @@ public class DataBase {
 			patient.printPatientData();
 		}
 	}
-	//pokazanie wsyztskich pacjentow
+	//pokazanie wszytskich pacjentow
 	void printAllPatients(){
 		System.out.println("Imie: "+ "Nazwisko: "+"Plec: "+ "Numer PESEL: " + "Ubezpieczenie: ");
 		for (Integer patientID: this.mapWithPatientsData.keySet()){

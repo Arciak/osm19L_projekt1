@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import javax.swing.*;
 
 import helpers.Exceptions;
+import helpers.Window;
 
 public class Gui extends JFrame 
 {
@@ -59,7 +60,7 @@ public class Gui extends JFrame
 		radioM.setBounds(100,50,100,30);    
 		ButtonGroup bg=new ButtonGroup();    
 		bg.add(radioK);bg.add(radioM);    
-		panelDane.add(radioK);panelDane.add(radioM);  
+		panelDane.add(radioK);panelDane.add(radioM); 
 		
 		lUbezpieczenie=new JLabel("Ubezpieczenie");
 		//lUbezpieczenie.setBounds(20,20,150,20);
@@ -77,10 +78,12 @@ public class Gui extends JFrame
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try{
-					PatientData newPatientData = new PatientData(tfImie.getText(), tfNazwisko.getText(),"M/K temporary" ,tfPesel.getText(), comboUbezpieczenie.getSelectedItem().toString());
+					PatientData newPatientData = new PatientData(tfImie.getText(), tfNazwisko.getText(),bg.getSelection().getActionCommand().toString() ,tfPesel.getText(), comboUbezpieczenie.getSelectedItem().toString());
 					dataBase.addPatient(newPatientData);
 					dataBase.printAllPatients();
 					} catch (Exceptions zleNazwisko) {
+					} catch (Exception e1){
+						new Window("Wybierz plec");
 					}
 			}
 	    } );
