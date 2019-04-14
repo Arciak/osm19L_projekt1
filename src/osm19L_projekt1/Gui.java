@@ -1,10 +1,16 @@
 package osm19L_projekt1;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.*;
+
+import helpers.Exceptions;
 
 public class Gui extends JFrame 
 {
+	DataBase dataBase = new DataBase();
 	public Gui()
 	{
 		GridBagLayout layoutGui= new GridBagLayout();
@@ -24,7 +30,7 @@ public class Gui extends JFrame
 		
 		
 		JLabel lImie, lNazwisko, lPesel, lPlec, lUbezpieczenie;
-		lImie=new JLabel("Imiê");
+		lImie=new JLabel("Imie");
 		//lImie.setBounds(20,20,150,20);
 		panelDane.add(lImie);
 		JTextField tfImie=new JTextField(15);
@@ -42,11 +48,11 @@ public class Gui extends JFrame
 		JTextField tfPesel=new JTextField(15); 
 		panelDane.add(tfPesel);
 		
-		lPlec=new JLabel("P³eæ");
+		lPlec=new JLabel("Plec");
 		//lPlec.setBounds(20,20,150,20);
 		panelDane.add(lPlec);
 		JRadioButton radioK=new JRadioButton("Kobieta");    
-		JRadioButton radioM=new JRadioButton("Mê¿czyzna");    
+		JRadioButton radioM=new JRadioButton("Meczyzna");    
 		radioK.setBounds(75,50,100,30);    
 		radioM.setBounds(100,50,100,30);    
 		ButtonGroup bg=new ButtonGroup();    
@@ -62,8 +68,21 @@ public class Gui extends JFrame
 		comboUbezpieczenie.addItem("Brak");
 		panelDane.add(comboUbezpieczenie);
 		
+/*********************** dodawanie danych pacjenta	*************************************/	
 		JButton bZapiszDane=new JButton("Zapisz");
 		panelDane.add(bZapiszDane);
+		bZapiszDane.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try{
+					PatientData newPatientData = new PatientData(tfImie.getText(), tfNazwisko.getText(),tfPesel.getText(), comboUbezpieczenie.getSelectedItem().toString());
+					dataBase.addPatient(newPatientData);
+					dataBase.printAllPatients();
+					} catch (Exceptions zleNazwisko) {
+					}
+			}
+	    } );
+		
 		JButton bAnulujDane=new JButton("Anuluj");
 		panelDane.add(bAnulujDane);
 		
@@ -113,11 +132,11 @@ public class Gui extends JFrame
 		
 		//PANEL LISTY PACJENTOW
 		JPanel panelLista=new JPanel();
-		panelLista.setBorder(BorderFactory.createTitledBorder("Lista pacjentów")) ;
+		panelLista.setBorder(BorderFactory.createTitledBorder("Lista pacjentï¿½w")) ;
 		panelLista.setPreferredSize(new Dimension(200,300));
 		
 		
-		String[] columnNames = { "Imie i nazwisko", "P³eæ", "Pesel", "Ubezpieczenie", "Badanie" };
+		String[] columnNames = { "Imie i nazwisko", "Plec", "Pesel", "Ubezpieczenie", "Badanie" };
 		JTable tableLista= new JTable();
 		//stworzyc obiekt dane
 		tableLista.setBounds(30,40,200,300);
@@ -125,7 +144,7 @@ public class Gui extends JFrame
 		
 		JButton bDodaj=new JButton("Dodaj");
 		panelLista.add(bDodaj);
-		JButton bUsun=new JButton("Usuñ");
+		JButton bUsun=new JButton("Usun");
 		panelLista.add(bUsun);
 		
 		//DODANIE PANELI
@@ -141,7 +160,8 @@ public class Gui extends JFrame
 		
 	}
 	public static void main(String[] args)
-	{
+	{	
+		System.out.print( "Welcome Our OSM project! \n " );
 		Gui app=new Gui();
 		app.setVisible(true);
 	}

@@ -1,6 +1,11 @@
 package osm19L_projekt1;
 import helpers.GlobalVariables;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import helpers.Exceptions;
+
 /***********************************************************************************************
  * Klasa zwiera dane osobowe pacjenta takie jak :											   *
  * #1 unikalny numer pacjenta po ktrym jest identyfikowany w systemie						   *
@@ -19,16 +24,14 @@ import helpers.GlobalVariables;
  * *********************************************************************************************/
 
 
-public class PatientData extends Patient{	
-	private int patientNumber_;
+public class PatientData{	
 	private String name_;
 	private String surename_;
 	private String idNumber_;
 	private String insurance_; 
 	
 	
-	public PatientData(int patientNumber_,String name_, String surename_, String idNumber_, String insurance_) throws IllegalAccessException {
-		this.setPatientNumber_(patientNumber_);
+	public PatientData(String name_, String surename_, String idNumber_, String insurance_) throws Exceptions {
 		this.setName_(name_);
 		this.setSurename_(surename_);
 		this.setIdNumber_(idNumber_);
@@ -42,13 +45,18 @@ public class PatientData extends Patient{
  * w przypadku kiedy wprowadzony numer jest innej dlugosci 	  *
  * niz standarody numer PESEL zwracany jest wyjatek			  *
  * ************************************************************/
-	public void setIdNumber_(String idNumber_) throws IllegalArgumentException {	
+	public void setIdNumber_(String idNumber_) throws Exceptions {	
+		Pattern p = Pattern.compile("[a-zA-Z]");
+		Matcher m = p.matcher("AB 45");
+
 		if(idNumber_.length()!=GlobalVariables.lengthOfIdNumber){
-			throw new IllegalArgumentException("Zly PESEL");
+			throw new Exceptions("Zla dlugosc PESEL");
+		}
+		else if(m.find()){
+			throw new Exceptions("Pesel zawiera litery");
 		}
 		else this.idNumber_ = idNumber_;
 	}
-	
 	
 	public String getInsurance_() {
 		return insurance_;
@@ -61,13 +69,14 @@ public class PatientData extends Patient{
 	public String getIdNumber_() {
 		return idNumber_;
 	}
+	
 	public String getSurename_() {
 		return surename_;
 	}
 
-	public void setSurename_(String surename_) throws IllegalAccessException {
-		if(surename_ != null && !surename_.trim().isEmpty()){
-			throw new IllegalAccessException("Wprowadz imie");
+	public void setSurename_(String surename_) throws Exceptions {
+		if(surename_ == null || surename_.length() == 0){
+			throw new Exceptions("Wprowadz nazwisko");
 		}
 		else this.surename_ = surename_;
 	}
@@ -76,27 +85,15 @@ public class PatientData extends Patient{
 		return name_;
 	}
 
-	public void setName_(String name_) {
-		this.name_ = name_;
+	public void setName_(String name_) throws Exceptions{
+		if(name_ == null || name_.length() == 0){
+			throw new Exceptions("Wprowadz imie");
+		}
+		else this.name_ = name_;
 	}
-
-	public int getPatientNumber_() {
-		return patientNumber_;
-	}
-
-	public void setPatientNumber_(int patientNumber_) {
-		this.patientNumber_ = patientNumber_;
-	}
-
-	@Override
-	int patientNumber(int setNumber_) {
-		// TODO Auto-generated method stub
-		return setNumber_;
-	}
-	
 	
 	public void printPatientData(){
-		System.out.println( patientNumber_+" "+name_+" "+surename_+ " " + idNumber_+ " "+ insurance_);
+		System.out.println( name_+" "+surename_+ " " + idNumber_+ " "+ insurance_);
 	}
 	
 }

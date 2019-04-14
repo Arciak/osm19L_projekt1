@@ -4,6 +4,7 @@ import java.util.Scanner;
 
 /************************************************************
  * Klasa glowna pogramu.									*
+ * Obsulaga z terminala jak jest GUI to nie dziala :P 		*
  * @author arciak											*
  ***********************************************************/
 
