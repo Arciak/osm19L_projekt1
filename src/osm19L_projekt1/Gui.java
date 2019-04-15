@@ -164,6 +164,9 @@ public class Gui extends JFrame
 		JPanel leukNeutEryt= new JPanel();
 		JLabel lData, lLeukocyty, lNeutrofile, lErytrocyty;
 		
+		
+		
+/********************************* KALENDARZ ********************************************/
 		lData=new JLabel("Data");
 		
 		JXDatePicker picker = new JXDatePicker();
