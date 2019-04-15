@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 import javax.swing.table.DefaultTableModel;
 
 import helpers.Exceptions;
@@ -35,49 +36,61 @@ public class Gui extends JFrame
 	int SelectedRawIndex = 0;
 	
 	public Gui()
-	{
-//		GridBagLayout layoutGui= new GridBagLayout();
-//		setLayout(layoutGui);
-//		GridBagConstraints gbc=new GridBagConstraints();
-//		gbc.fill=GridBagConstraints.HORIZONTAL;
-//		
-//		this.setTitle("Rejestracja wynikow bada");
-//		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//		this.setSize(700, 500);
-		
+	{	
 		JFrame gbc = new JFrame("Rejestracja wynikow bada");
 	    gbc.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	    gbc.setLayout(new GridBagLayout());
 		
 		//PANEL DANYCH PACJENTA
 		JPanel panelDane=new JPanel();
+		panelDane.setLayout(new BorderLayout());
 		panelDane.setBorder(BorderFactory.createTitledBorder("Dane pacjenta")) ;
+		
+		JPanel imieNazPesel = new JPanel();
+		imieNazPesel.setLayout(new BorderLayout());
 //		panelDane.setPreferredSize(new Dimension(200,500));
 		
 		
 		
 		JLabel lImie, lNazwisko, lPesel, lPlec, lUbezpieczenie;
+		JPanel imeP = new JPanel();
 		lImie=new JLabel("Imie");
 		//lImie.setBounds(20,20,150,20);
-		panelDane.add(lImie);
+		//panelDane.add(lImie);
 		JTextField tfImie=new JTextField(15);
-		panelDane.add(tfImie);
+		//panelDane.add(tfImie);
+		imeP.add(lImie, BorderLayout.WEST);
+		imeP.add(tfImie, BorderLayout.EAST);
 		
+		JPanel nazP = new JPanel();
 		lNazwisko=new JLabel("Nazwisko");
 		//lNazwisko.setBounds(20,20,150,20);
-		panelDane.add(lNazwisko);
+		//panelDane.add(lNazwisko);
 		JTextField tfNazwisko=new JTextField(15);
-		panelDane.add(tfNazwisko);
+		//panelDane.add(tfNazwisko);
+		nazP.add(lNazwisko, BorderLayout.WEST);
+		nazP.add(tfNazwisko, BorderLayout.EAST);
 		
+		JPanel peselP = new JPanel();
 		lPesel=new JLabel("Pesel");
 		//lPesel.setBounds(20,20,150,20);
-		panelDane.add(lPesel);
+		//panelDane.add(lPesel);
 		JTextField tfPesel=new JTextField(15); 
-		panelDane.add(tfPesel);
+		//panelDane.add(tfPesel);
+		peselP.add(lPesel,BorderLayout.WEST);
+		peselP.add(tfPesel,BorderLayout.EAST);
 		
+		imieNazPesel .add(imeP, BorderLayout.NORTH);	
+		imieNazPesel .add(nazP, BorderLayout.CENTER);
+		imieNazPesel .add(peselP, BorderLayout.SOUTH);
+		panelDane.add(imieNazPesel,BorderLayout.NORTH);
+		
+		JPanel plecUbezBut = new JPanel();
+		plecUbezBut.setLayout(new BorderLayout());
+		JPanel plecP= new JPanel();
 		lPlec=new JLabel("Plec");
 		//lPlec.setBounds(20,20,150,20);
-		panelDane.add(lPlec);
+		//panelDane.add(lPlec);
 		JRadioButton radioK=new JRadioButton("Kobieta");    
 		radioK.setActionCommand("K");
 		JRadioButton radioM=new JRadioButton("Meczyzna");  
@@ -86,32 +99,47 @@ public class Gui extends JFrame
 		radioM.setBounds(100,50,100,30);    
 		ButtonGroup bg=new ButtonGroup();    
 		bg.add(radioK);bg.add(radioM);    
-		panelDane.add(radioK);panelDane.add(radioM); 
+		//panelDane.add(radioK);panelDane.add(radioM); 
+		plecP.add(lPlec,BorderLayout.WEST);
+		plecP.add(radioK, BorderLayout.CENTER);
+		plecP.add(radioM, BorderLayout.EAST);
 		
+		JPanel ubezP = new JPanel();
 		lUbezpieczenie=new JLabel("Ubezpieczenie");
 		//lUbezpieczenie.setBounds(20,20,150,20);
-		panelDane.add(lUbezpieczenie);		
+		//panelDane.add(lUbezpieczenie);		
 		JComboBox<String> comboUbezpieczenie = new JComboBox<String>();
 		comboUbezpieczenie.addItem("NFZ");
 		comboUbezpieczenie.addItem("Prywatnie");
 		comboUbezpieczenie.addItem("Brak");
-		panelDane.add(comboUbezpieczenie);
+		//panelDane.add(comboUbezpieczenie);
+		ubezP.add(lUbezpieczenie, BorderLayout.WEST);
+		ubezP.add(comboUbezpieczenie, BorderLayout.EAST);
 		
-/*********************** dodawanie danych pacjenta	*************************************/	
+		JPanel zapAnulP = new JPanel();
 		JButton bZapiszDane=new JButton("Zapisz");
-		panelDane.add(bZapiszDane);
+		//panelDane.add(bZapiszDane);
 		
 		JButton bAnulujDane=new JButton("Anuluj");
-		panelDane.add(bAnulujDane);
+		//panelDane.add(bAnulujDane);
+		zapAnulP.add(bZapiszDane, BorderLayout.EAST);
+		zapAnulP.add(bAnulujDane, BorderLayout.WEST);
 		
-		GridBagLayout layoutDane= new GridBagLayout();
-		panelDane.setLayout(layoutDane);
-		GridBagConstraints gbcDane=new GridBagConstraints();
-		gbcDane.fill=GridBagConstraints.HORIZONTAL;
-		GridLayout layoutBadanie= new GridLayout(4,2);
-		panelDane.setPreferredSize(new Dimension(200,500));
-		panelDane.setLayout(layoutBadanie);
+		plecUbezBut.add(plecP,BorderLayout.NORTH);
+		plecUbezBut.add(ubezP, BorderLayout.CENTER);
+		plecUbezBut.add(zapAnulP, BorderLayout.SOUTH);
 		
+		panelDane.add(imieNazPesel,BorderLayout.NORTH);
+		panelDane.add(plecUbezBut,BorderLayout.SOUTH);
+		
+//		GridBagLayout layoutDane= new GridBagLayout();
+//		panelDane.setLayout(layoutDane);
+//		GridBagConstraints gbcDane=new GridBagConstraints();
+//		gbcDane.fill=GridBagConstraints.HORIZONTAL;
+//		GridLayout layoutBadanie= new GridLayout(4,2);
+//		panelDane.setPreferredSize(new Dimension(200,500));
+//		panelDane.setLayout(layoutBadanie);
+//		
 		//PANEL BADANIA
 		JPanel panelBadanie=new JPanel();
 		panelBadanie.setBorder(BorderFactory.createTitledBorder("Badanie")) ;
@@ -209,7 +237,7 @@ public class Gui extends JFrame
 		            }
 		        });
 		        
-		        
+/**************************** zapis danych pacjenta ******************************************/		        
 		        bZapiszDane.addActionListener(new ActionListener() {
 					@Override
 					public void actionPerformed(ActionEvent e) {
@@ -255,9 +283,6 @@ public class Gui extends JFrame
 		        
 		
 		//DODANIE PANELI
-//		gbc.gridx=0;
-//		gbc.gridy=0;		
-//		add(panelDane,gbc);
 		addComponentFrame(gbc, panelDane,  0, 0, 1, 1, GridBagConstraints.NORTH, GridBagConstraints.BOTH);
 		addComponentFrame(gbc, panelBadanie, 0, 1, 1, 1, GridBagConstraints.SOUTH, GridBagConstraints.BOTH);
 		addComponentFrame(gbc, panelLista, 2,0, 2, 2, GridBagConstraints.CENTER, GridBagConstraints.BOTH);
