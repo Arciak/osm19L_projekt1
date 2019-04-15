@@ -11,7 +11,7 @@ import helpers.Exceptions;
  * #1 unikalny numer pacjenta po ktrym jest identyfikowany w systemie						   *
  * #2 imie																					   *
  * #3 nazwisko																				   *
- * #4 idNumber_ == numer PESEL																   *	
+ * #4															   *	
  * #5 numer ubezpieczenia																	   *
  * 																							   *
  * Klasa posiada funckjce:																	   *
@@ -28,15 +28,13 @@ public class PatientData{
 	private String name_;
 	private String surename_;
 	private String sex_;
-	private String idNumber_;
 	private String insurance_; 
 	
 	
-	public PatientData(String name_, String surename_, String sex_, String idNumber_, String insurance_) throws Exceptions {
+	public PatientData(String name_, String surename_, String sex_, String insurance_) throws Exceptions {
 		this.setName_(name_);
 		this.setSurename_(surename_);
 		this.setSex_(sex_);
-		this.setIdNumber_(idNumber_);
 		this.setInsurance_(insurance_);
 	}
 	
@@ -47,19 +45,6 @@ public class PatientData{
  * w przypadku kiedy wprowadzony numer jest innej dlugosci 	  *
  * niz standarody numer PESEL zwracany jest wyjatek			  *
  * ************************************************************/
-	public void setIdNumber_(String idNumber_) throws Exceptions {	
-		
-		if (idNumber_.matches("[0-9]+") == true) {
-			this.idNumber_ = idNumber_;
-		}
-		else if(idNumber_.length()!=GlobalVariables.lengthOfIdNumber){
-			throw new Exceptions("Zla dlugosc PESEL");
-		}
-		else 
-			throw new Exceptions("Pesel zawiera litery");
-		
-	}
-	
 	public String getInsurance_() {
 		return insurance_;
 	}
@@ -68,9 +53,7 @@ public class PatientData{
 		this.insurance_ = insurance_;
 	}
 
-	public String getIdNumber_() {
-		return idNumber_;
-	}
+	
 	
 	public String getSurename_() {
 		return surename_;
@@ -108,7 +91,7 @@ public class PatientData{
 	}
 	
 	public void printPatientData(){
-		System.out.println( name_+" "+surename_+ " " + sex_ + " " + idNumber_+ " "+ insurance_);
+		System.out.println( name_+" "+surename_+ " " + sex_ + " "+ insurance_);
 	}
 	
 }

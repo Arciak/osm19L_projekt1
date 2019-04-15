@@ -14,8 +14,7 @@ package osm19L_projekt1;
  * @author arciak															*
  ****************************************************************************/
 
-public class Date extends Patient{
-	private int patientNumber_;
+public class Date{
 	private int day_;
 	private int month_;
 	private int year_;
@@ -25,15 +24,13 @@ public class Date extends Patient{
  * @author arciak																	*
  ************************************************************************************/
 	public Date(){
-		this.setPatientNumber_(0);
 		this.setDay_(0);
 		this.setMonth_(0);
 		this.setYear_(0);
 	}
 	
-	public Date(int patientNumber_, int day_, int month_, int year_) {
+	public Date(int day_, int month_, int year_) {
 		super();
-		this.setPatientNumber_(patientNumber_);
 		this.setDay_(day_);
 		this.setMonth_(month_);
 		this.setYear_(year_);
@@ -62,21 +59,6 @@ public class Date extends Patient{
 	public void setYear_(int year_) {
 		this.year_ = year_;
 	}
-
-	public int getPatientNumber_() {
-		return patientNumber_;
-	}
-
-	public void setPatientNumber_(int patientNumber_) {
-		this.patientNumber_ = patientNumber_;
-	}
-
-	@Override
-	int patientNumber(int setNumber_) {
-		// TODO Auto-generated method stub
-		return setNumber_;
-	}
-	
 	
 
 }

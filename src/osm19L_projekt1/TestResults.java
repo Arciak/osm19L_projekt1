@@ -26,9 +26,9 @@ public class TestResults extends Date{
 		this.setTestState_(0);
 	}
 	
-	public TestResults(int patientNumber_, int day_, int month_, int year_, int leucocytesNumber_, int neutrophilsNumber_,
+	public TestResults(int day_, int month_, int year_, int leucocytesNumber_, int neutrophilsNumber_,
 			int erythrocytes_, int testState_) {
-		super(patientNumber_, day_, month_, year_);
+		super(day_, month_, year_);
 		this.setLeucocytesNumber_(leucocytesNumber_);
 		this.setNeutrophilsNumber_(neutrophilsNumber_);
 		this.setErythrocytes_(erythrocytes_);

@@ -21,22 +21,29 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
+import helpers.Exceptions;
+
 public class DataBase {
 	
 	//PatientID patientId = new PatientID();
 	private static Scanner inputID = new Scanner(System.in); //czyta standardowe wejscie
 	
-	private int patientUniqueNumber_ = 1;
-	
-	private Map< Integer ,PatientData> mapWithPatientsData = new HashMap<>(); // dla dnych osobowych pacjenta
-	private Map< Integer ,Patient> mapWithPatientsTestResults = new HashMap<>(); // dla badan pacjenta
+	private Map< String ,PatientData> mapWithPatientsData = new HashMap<>(); // dla dnych osobowych pacjenta
+	private Map< String ,TestResults> mapWithPatientsTestResults = new HashMap<>(); // dla badan pacjenta
 	
 /******************************** FUNKCJE *********************************************/
 	//dodawnie pacjenta do listy
-	void addPatient(PatientData patientData){
-		mapWithPatientsData.put(patientUniqueNumber_, patientData);
-		//mapWithPatientsTestResults.put(patientUniqueNumber_, testResults);
-		++patientUniqueNumber_;
+	void addPatient(String numberId, PatientData patientData) throws Exceptions{
+		if(numberId == null || numberId.length() == 0){
+			throw new Exceptions("Wprowadz PESEL");
+		}
+		for (String patientID: mapWithPatientsData.keySet()){
+			if(numberId.equals(patientID))
+				throw new Exceptions("Pacjent o podanym numerze PESEL juz jest w bazie");
+			else 
+				System.out.println("Jest ok");
+		} 
+		mapWithPatientsData.put(numberId, patientData);
 	}
 	//drukowanie na ekran danych konkretnego pacjenta
 	void printPatient(int patientUniqueNumber) throws IllegalAccessException{
@@ -45,20 +52,40 @@ public class DataBase {
 			throw new IllegalAccessException("Nie ma takiego pacjenta");
 		}
 		else {
-			System.out.println("Nr Pacjenta: "+"Imie: "+ "Nazwisko: "+ "Numer PESEL: " + "Ubezpieczenie: ");
+			System.out.println("Nr Pacjenta: "+"Imie: "+ "Nazwisko: "+ "Ubezpieczenie: ");
 			patient.printPatientData();
 		}
 	}
+	
 	//pokazanie wszytskich pacjentow
 	void printAllPatients(){
 		System.out.println("Imie: "+ "Nazwisko: "+"Plec: "+ "Numer PESEL: " + "Ubezpieczenie: ");
-		for (Integer patientID: this.mapWithPatientsData.keySet()){
+		for (String patientID: this.mapWithPatientsData.keySet()){
 			PatientData patient = (PatientData) mapWithPatientsData.get(patientID);
 			patient.printPatientData();
 		} 
 	}
+	
+	Object[] returnDataTable(String numberId){
+		Object[] wartosci = new Object[5];
+		wartosci[0] =  mapWithPatientsData.get(numberId).getName_() + " " + mapWithPatientsData.get(numberId).getSurename_();
+		wartosci[1] =  mapWithPatientsData.get(numberId).getSex_();
+		wartosci[2] =  numberId;
+		wartosci[3] = mapWithPatientsData.get(numberId).getInsurance_();
+		return wartosci;
+		
+	}
+	
 	//usuwanie pacjenta
-	void removePatient(int patientUniqueNumber){
+	void removePatient(String patientUniqueNumber) throws Exceptions{
+		if(patientUniqueNumber== null || patientUniqueNumber.length() == 0){
+			throw new Exceptions("Wybierz pacjenta");
+		}
 		mapWithPatientsData.remove(patientUniqueNumber);
 	}
+	
+	void addTestResults(String uniqNumber, TestResults patientTestResults){
+		mapWithPatientsTestResults.put(uniqNumber, patientTestResults);
+	}
+	
 }

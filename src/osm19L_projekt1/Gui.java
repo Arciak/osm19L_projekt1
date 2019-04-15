@@ -5,28 +5,54 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 
 import helpers.Exceptions;
+import helpers.GlobalVariables;
 import helpers.Window;
 
 public class Gui extends JFrame 
 {
+	private String setIdNumber_(String idNumber_) throws Exceptions {	
+		if (idNumber_.matches("[0-9]+") == true) {
+			return idNumber_;
+		}
+		else if(idNumber_.length()!=GlobalVariables.lengthOfIdNumber){
+			throw new Exceptions("Zla dlugosc PESEL");
+		}
+		else 
+			throw new Exceptions("Pesel zawiera litery");	
+	}
+	private static final Insets insets = new Insets(0, 0, 0, 0);
+	private static void addComponentFrame(Container container, Component component, int gridx, int gridy,
+		      int gridwidth, int gridheight, int anchor, int fill) {
+		    GridBagConstraints gbc = new GridBagConstraints(gridx, gridy, gridwidth, gridheight, 1.0, 1.0,
+		        anchor, fill, insets, 0, 0);
+		    container.add(component, gbc);
+		  }
+
 	DataBase dataBase = new DataBase();
+	int SelectedRawIndex = 0;
+	
 	public Gui()
 	{
-		GridBagLayout layoutGui= new GridBagLayout();
-		setLayout(layoutGui);
-		GridBagConstraints gbc=new GridBagConstraints();
-		gbc.fill=GridBagConstraints.HORIZONTAL;
+//		GridBagLayout layoutGui= new GridBagLayout();
+//		setLayout(layoutGui);
+//		GridBagConstraints gbc=new GridBagConstraints();
+//		gbc.fill=GridBagConstraints.HORIZONTAL;
+//		
+//		this.setTitle("Rejestracja wynikow bada");
+//		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//		this.setSize(700, 500);
 		
-		this.setTitle("Rejestracja wynikow bada");
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.setSize(700, 500);
+		JFrame gbc = new JFrame("Rejestracja wynikow bada");
+	    gbc.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	    gbc.setLayout(new GridBagLayout());
 		
 		//PANEL DANYCH PACJENTA
 		JPanel panelDane=new JPanel();
 		panelDane.setBorder(BorderFactory.createTitledBorder("Dane pacjenta")) ;
-		//panelDane.setPreferredSize(new Dimension(200,500));
+//		panelDane.setPreferredSize(new Dimension(200,500));
 		
 		
 		
@@ -53,9 +79,9 @@ public class Gui extends JFrame
 		//lPlec.setBounds(20,20,150,20);
 		panelDane.add(lPlec);
 		JRadioButton radioK=new JRadioButton("Kobieta");    
-		radioK.setActionCommand("Kobieta");
+		radioK.setActionCommand("K");
 		JRadioButton radioM=new JRadioButton("Meczyzna");  
-		radioM.setActionCommand("Mezczyzna");
+		radioM.setActionCommand("M");
 		radioK.setBounds(75,50,100,30);    
 		radioM.setBounds(100,50,100,30);    
 		ButtonGroup bg=new ButtonGroup();    
@@ -74,19 +100,6 @@ public class Gui extends JFrame
 /*********************** dodawanie danych pacjenta	*************************************/	
 		JButton bZapiszDane=new JButton("Zapisz");
 		panelDane.add(bZapiszDane);
-		bZapiszDane.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				try{
-					PatientData newPatientData = new PatientData(tfImie.getText(), tfNazwisko.getText(),bg.getSelection().getActionCommand().toString() ,tfPesel.getText(), comboUbezpieczenie.getSelectedItem().toString());
-					dataBase.addPatient(newPatientData);
-					dataBase.printAllPatients();
-					} catch (Exceptions zleNazwisko) {
-					} catch (Exception e1){
-						new Window("Wybierz plec");
-					}
-			}
-	    } );
 		
 		JButton bAnulujDane=new JButton("Anuluj");
 		panelDane.add(bAnulujDane);
@@ -95,14 +108,14 @@ public class Gui extends JFrame
 		panelDane.setLayout(layoutDane);
 		GridBagConstraints gbcDane=new GridBagConstraints();
 		gbcDane.fill=GridBagConstraints.HORIZONTAL;
+		GridLayout layoutBadanie= new GridLayout(4,2);
+		panelDane.setPreferredSize(new Dimension(200,500));
+		panelDane.setLayout(layoutBadanie);
 		
 		//PANEL BADANIA
 		JPanel panelBadanie=new JPanel();
 		panelBadanie.setBorder(BorderFactory.createTitledBorder("Badanie")) ;
 		//panelBadanie.setPreferredSize(new Dimension(200,500));
-		
-		GridLayout layoutBadanie= new GridLayout(4,2);
-		panelDane.setLayout(layoutBadanie);
 		
 		JLabel lData, lLeukocyty, lNeutrofile, lErytrocyty;
 		lData=new JLabel("Data");
@@ -134,40 +147,128 @@ public class Gui extends JFrame
 		JButton bAnulujBadanie=new JButton("Anuluj");
 		panelBadanie.add(bAnulujBadanie);
 		
+		bAnulujDane.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				tfImie.setText("");
+				tfNazwisko.setText("");
+				tfPesel.setText("");
+				radioK.setSelected(false);
+				radioM.setSelected(false);			
+			}
+			
+		});
+		
 		
 		//PANEL LISTY PACJENTOW
-		JPanel panelLista=new JPanel();
-		panelLista.setBorder(BorderFactory.createTitledBorder("Lista pacjent�w")) ;
-		panelLista.setPreferredSize(new Dimension(200,300));
-		
-		
-		String[] columnNames = { "Imie i nazwisko", "Plec", "Pesel", "Ubezpieczenie", "Badanie" };
-		JTable tableLista= new JTable();
-		//stworzyc obiekt dane
-		tableLista.setBounds(30,40,200,300);
-		panelLista.add(tableLista);
-		
-		JButton bDodaj=new JButton("Dodaj");
-		panelLista.add(bDodaj);
-		JButton bUsun=new JButton("Usun");
-		panelLista.add(bUsun);
+				JPanel panelLista=new JPanel();
+				panelLista.setLayout(new BorderLayout());
+				panelLista.setBorder(BorderFactory.createTitledBorder("Lista pacjentow")) ;
+				//panelLista.setBounds(300, 0, 450, 500);
+				
+				Object[] columnNames = { "Imie i nazwisko", "Plec", "Pesel", "Ubezpieczenie", "Badanie" };
+				JTable tableLista= new JTable();
+					
+				
+//				if(TestResults.getTestState_()==0 ){
+//		        	   check.setSelected(false);
+//		        	} else {
+//		        	   check.setSelected(true);
+//		        	}
+//		        tableLista.getColumnModel().getColumn(4).setCellEditor(new DefaultCellEditor(check)); 
+				
+				DefaultTableModel model = new DefaultTableModel();
+		        model.setColumnIdentifiers(columnNames);
+		        tableLista.setModel(model);
+		        JPanel jpTemp2 = new JPanel(); 
+		        jpTemp2.setLayout(new BorderLayout());
+		        jpTemp2.add(tableLista, BorderLayout.CENTER); 
+		        jpTemp2.add(tableLista.getTableHeader(), BorderLayout.NORTH); 
+		        JCheckBox check= new JCheckBox();
+		        tableLista.getColumnModel().getColumn(4).setCellEditor(new DefaultCellEditor(check)); 
+		        
+		        ListSelectionModel selectionModel = tableLista.getSelectionModel();
+		        selectionModel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+
+/**************************** tutaj mysz wybiera wiersz ************************************/      
+		        tableLista.addMouseListener(new java.awt.event.MouseAdapter() {
+		            public void mouseClicked(java.awt.event.MouseEvent evt) {
+		            	DefaultTableModel model = (DefaultTableModel)tableLista.getModel();
+		            	SelectedRawIndex = tableLista.getSelectedRow();
+		            	String[] imieNaz = model.getValueAt(SelectedRawIndex,0).toString().split(" ");
+		            	tfImie.setText(imieNaz[0]);
+		            	tfNazwisko.setText(imieNaz[1]);
+		            	tfPesel.setText(model.getValueAt(SelectedRawIndex, 2).toString());
+		            	String sex = model.getValueAt(SelectedRawIndex, 1).toString();
+		            	if(sex == "M")
+		            		radioM.setSelected(true);
+		            	else 
+		            		radioK.setSelected(true);
+		            	
+		            }
+		        });
+		        
+		        
+		        bZapiszDane.addActionListener(new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						try{
+							Object[] row = new Object[5];
+							PatientData newPatientData = new PatientData(tfImie.getText(), tfNazwisko.getText(),bg.getSelection().getActionCommand().toString(), comboUbezpieczenie.getSelectedItem().toString());
+							dataBase.addPatient(setIdNumber_(tfPesel.getText()), newPatientData);
+							row = dataBase.returnDataTable(tfPesel.getText()); 
+							JCheckBox check= new JCheckBox();
+					        row[4] = check;
+							model.addRow(row);
+							//dataBase.printAllPatients();
+							} catch (Exceptions zleNazwisko) {
+							} catch (Exception e1){
+								new Window("Wybierz plec");
+							}
+					}
+			    } );
+		        
+		        JScrollPane tableLista2 = new JScrollPane(jpTemp2);
+		        panelLista.add(tableLista2);
+		        
+		        JPanel bDaU = new JPanel();
+		        JButton bDodaj=new JButton("Dodaj");
+		        bDaU.add(bDodaj, BorderLayout.WEST);
+				JButton bUsun=new JButton("Usuń");
+				bDaU.add(bUsun,BorderLayout.EAST);
+		        panelLista.add(bDaU, BorderLayout.SOUTH);
+		        
+		        bUsun.addActionListener(new ActionListener(){
+
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						try {
+							dataBase.removePatient(tfPesel.getText());
+							((DefaultTableModel)tableLista.getModel()).removeRow(SelectedRawIndex);
+						} catch (Exceptions e1) {
+						}
+						
+					}
+		        	
+		        });
+		        
 		
 		//DODANIE PANELI
-		gbc.gridx=0;
-		gbc.gridy=0;		
-		add(panelDane,gbc);
-		gbc.gridx=0;
-		gbc.gridy=1;
-		add(panelBadanie,gbc);
-		gbc.gridx=1;
-		gbc.gridy=0;
-		add(panelLista,gbc);
+//		gbc.gridx=0;
+//		gbc.gridy=0;		
+//		add(panelDane,gbc);
+		addComponentFrame(gbc, panelDane,  0, 0, 1, 1, GridBagConstraints.NORTH, GridBagConstraints.BOTH);
+		addComponentFrame(gbc, panelBadanie, 0, 1, 1, 1, GridBagConstraints.SOUTH, GridBagConstraints.BOTH);
+		addComponentFrame(gbc, panelLista, 2,0, 2, 2, GridBagConstraints.CENTER, GridBagConstraints.BOTH);
+		gbc.setSize(700, 500);
+		gbc.setVisible(true);
 		
 	}
 	public static void main(String[] args)
 	{	
 		System.out.print( "Welcome Our OSM project! \n " );
-		Gui app=new Gui();
-		app.setVisible(true);
+		new Gui();
+		//app.setVisible(true);
 	}
 }
