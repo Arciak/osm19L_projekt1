@@ -6,7 +6,7 @@
 
 **Zadanie:** 18
 
-**Temat:** Diagnostyka ostrej bia³aczce szpikowej: liczba leukocytów, liczba neutrofili, liczba erytrocytów.
+**Temat:** Diagnostyka ostrej bialaczki szpikowej: liczba leukocytow, liczba neutrofili, liczba erytrocytow.
 
 **Zespol:** Agnieszka Grotek, Artur Zarzecki
 
