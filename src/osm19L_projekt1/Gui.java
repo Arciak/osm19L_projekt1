@@ -3,19 +3,35 @@ package osm19L_projekt1;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Calendar;
+import java.time.format.DateTimeFormatter;
+
+import java.util.*;
 
 import com.toedter.calendar.JCalendar;
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.table.DefaultTableModel;
 
+import org.jdatepicker.impl.JDatePanelImpl;
+import org.jdatepicker.impl.JDatePickerImpl;
+import org.jdatepicker.impl.UtilDateModel;
+import org.jdesktop.swingx.JXDatePicker;
+import org.jdatepicker.*;
+
+
 import helpers.Exceptions;
 import helpers.GlobalVariables;
 import helpers.Window;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
 public class Gui extends JFrame 
 {
+	private JDatePickerImpl datePicker;
+	
 	private String setIdNumber_(String idNumber_) throws Exceptions {	
 		if (idNumber_.matches("[0-9]+") == true) {
 			return idNumber_;
@@ -149,13 +165,21 @@ public class Gui extends JFrame
 		JLabel lData, lLeukocyty, lNeutrofile, lErytrocyty;
 		
 		lData=new JLabel("Data");
-		Calendar calendarDate= Calendar.getInstance();
-		JCalendar calendar = new JCalendar();
+		
+		JXDatePicker picker = new JXDatePicker();
+        picker.setDate(Calendar.getInstance().getTime());
+        picker.setFormats(new SimpleDateFormat("dd.MM.yyyy"));
+        
+		
+		
+		
 		
 		JPanel dataP = new JPanel();
 		dataP.setLayout(new BorderLayout());
 		dataP.add(lData, BorderLayout.WEST);
-		dataP.add(calendar, BorderLayout.EAST);
+		dataP.add(picker, BorderLayout.CENTER);
+		//dataP.add(calendar, BorderLayout.EAST);
+		//dataP.add(datePicker,BorderLayout.WEST);
 		
 		JTextField tfLeukocyty=new JTextField(15);
 		tfLeukocyty.setEditable(false);
@@ -272,6 +296,9 @@ public class Gui extends JFrame
 		            	tfNazwisko.setText(imieNaz[1]);
 		            	tfPesel.setText(model.getValueAt(SelectedRawIndex, 2).toString());
 		            	String sex = model.getValueAt(SelectedRawIndex, 1).toString();
+		            	tfLeukocyty.setText("");
+						tfNeutrofile.setText("");
+						tfErytrocyty.setText("");	
 		            	if(sex == "M")
 		            		radioM.setSelected(true);
 		            	else 
@@ -323,7 +350,12 @@ public class Gui extends JFrame
 					public void actionPerformed(ActionEvent e) {
 						check.isSelected();
 						try{
-							TestResults newTest = new TestResults(11,12,12, Integer.parseInt(tfLeukocyty.getText()), Integer.parseInt(tfNeutrofile.getText()),Integer.parseInt(tfErytrocyty.getText()), 1);
+							java.util.Date oDate = picker.getDate();        
+							DateFormat oDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+							String[] szDate = oDateFormat.format(oDate).split("-");
+							
+							
+							TestResults newTest = new TestResults(Integer.parseInt(szDate[2]),Integer.parseInt(szDate[1]),Integer.parseInt(szDate[0]), Integer.parseInt(tfLeukocyty.getText()), Integer.parseInt(tfNeutrofile.getText()),Integer.parseInt(tfErytrocyty.getText()), 1);
 							dataBase.addTestResults(setIdNumber_(tfPesel.getText()), newTest);
 							//row = dataBase.returnDataTable(tfPesel.getText()); 
 							JCheckBox check= new JCheckBox();
@@ -331,7 +363,7 @@ public class Gui extends JFrame
 							model.setValueAt(check, SelectedRawIndex, 4);							
 							} catch (Exceptions zleNazwisko) {
 							} catch (Exception e1){
-								new Window("Wybierz plec");
+								new Window("Zle dane wejsciowe badania. Trzeba liczby calkowite");
 							}
 					}
 			    } );
