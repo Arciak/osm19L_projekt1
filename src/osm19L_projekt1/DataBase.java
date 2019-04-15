@@ -33,16 +33,18 @@ public class DataBase {
 	
 /******************************** FUNKCJE *********************************************/
 	//dodawnie pacjenta do listy
-	void addPatient(String numberId, PatientData patientData) throws Exceptions{
+	void addPatient(String numberId, PatientData patientData, int EditData) throws Exceptions{
 		if(numberId == null || numberId.length() == 0){
 			throw new Exceptions("Wprowadz PESEL");
 		}
+		if(EditData == 0){
 		for (String patientID: mapWithPatientsData.keySet()){
 			if(numberId.equals(patientID))
 				throw new Exceptions("Pacjent o podanym numerze PESEL juz jest w bazie");
 			else 
 				System.out.println("Jest ok");
 		} 
+		}
 		mapWithPatientsData.put(numberId, patientData);
 	}
 	//drukowanie na ekran danych konkretnego pacjenta
@@ -86,6 +88,23 @@ public class DataBase {
 	
 	void addTestResults(String uniqNumber, TestResults patientTestResults){
 		mapWithPatientsTestResults.put(uniqNumber, patientTestResults);
+	}
+	
+	Integer[] bloodCellsAnddataValue(String patientId) throws Exception{
+		Integer[] data = new Integer[6];
+		
+		if(mapWithPatientsTestResults.get(patientId)==null){
+			throw new IllegalArgumentException("Nie ma jeszcze danych");
+		}
+		
+		TestResults downData = (TestResults) mapWithPatientsTestResults.get(patientId);
+		data[0] = downData.getDay_();
+		data[1] = downData.getMonth_();
+		data[2] = downData.getYear_();
+		data[3] = downData.getLeucocytesNumber_();
+		data[4] = downData.getNeutrophilsNumber_();
+		data[5] = downData.getErythrocytes_();	
+		return data;
 	}
 	
 }

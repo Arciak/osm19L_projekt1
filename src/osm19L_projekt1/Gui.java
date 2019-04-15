@@ -3,7 +3,9 @@ package osm19L_projekt1;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Calendar;
 
+import com.toedter.calendar.JCalendar;
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.table.DefaultTableModel;
@@ -24,22 +26,17 @@ public class Gui extends JFrame
 		else 
 			throw new Exceptions("Pesel zawiera litery");	
 	}
-	private static final Insets insets = new Insets(0, 0, 0, 0);
-	private static void addComponentFrame(Container container, Component component, int gridx, int gridy,
-		      int gridwidth, int gridheight, int anchor, int fill) {
-		    GridBagConstraints gbc = new GridBagConstraints(gridx, gridy, gridwidth, gridheight, 1.0, 1.0,
-		        anchor, fill, insets, 0, 0);
-		    container.add(component, gbc);
-		  }
+
 
 	DataBase dataBase = new DataBase();
 	int SelectedRawIndex = 0;
+	int EditData = 0;
 	
 	public Gui()
 	{	
-		JFrame gbc = new JFrame("Rejestracja wynikow bada");
+		JFrame gbc = new JFrame("Rejestracja wynikow badan");
 	    gbc.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	    gbc.setLayout(new GridBagLayout());
+	    gbc.setLayout(new BorderLayout());
 		
 		//PANEL DANYCH PACJENTA
 		JPanel panelDane=new JPanel();
@@ -58,6 +55,7 @@ public class Gui extends JFrame
 		//lImie.setBounds(20,20,150,20);
 		//panelDane.add(lImie);
 		JTextField tfImie=new JTextField(15);
+		tfImie.setEditable(false);
 		//panelDane.add(tfImie);
 		imeP.add(lImie, BorderLayout.WEST);
 		imeP.add(tfImie, BorderLayout.EAST);
@@ -67,6 +65,7 @@ public class Gui extends JFrame
 		//lNazwisko.setBounds(20,20,150,20);
 		//panelDane.add(lNazwisko);
 		JTextField tfNazwisko=new JTextField(15);
+		tfNazwisko.setEditable(false);
 		//panelDane.add(tfNazwisko);
 		nazP.add(lNazwisko, BorderLayout.WEST);
 		nazP.add(tfNazwisko, BorderLayout.EAST);
@@ -76,6 +75,7 @@ public class Gui extends JFrame
 		//lPesel.setBounds(20,20,150,20);
 		//panelDane.add(lPesel);
 		JTextField tfPesel=new JTextField(15); 
+		tfPesel.setEditable(false);
 		//panelDane.add(tfPesel);
 		peselP.add(lPesel,BorderLayout.WEST);
 		peselP.add(tfPesel,BorderLayout.EAST);
@@ -129,7 +129,7 @@ public class Gui extends JFrame
 		plecUbezBut.add(ubezP, BorderLayout.CENTER);
 		plecUbezBut.add(zapAnulP, BorderLayout.SOUTH);
 		
-		panelDane.add(imieNazPesel,BorderLayout.NORTH);
+		panelDane.add(imieNazPesel,BorderLayout.CENTER);
 		panelDane.add(plecUbezBut,BorderLayout.SOUTH);
 		
 //		GridBagLayout layoutDane= new GridBagLayout();
@@ -143,37 +143,63 @@ public class Gui extends JFrame
 		//PANEL BADANIA
 		JPanel panelBadanie=new JPanel();
 		panelBadanie.setBorder(BorderFactory.createTitledBorder("Badanie")) ;
+		panelBadanie.setLayout(new BorderLayout());
 		//panelBadanie.setPreferredSize(new Dimension(200,500));
-		
+		JPanel leukNeutEryt= new JPanel();
 		JLabel lData, lLeukocyty, lNeutrofile, lErytrocyty;
+		
 		lData=new JLabel("Data");
-		//lData.setBounds(20,20,150,20);
-		panelBadanie.add(lData);
+		Calendar calendarDate= Calendar.getInstance();
+		JCalendar calendar = new JCalendar();
 		
-		JTextField tfLeukocyty=new JTextField(30);
-		panelBadanie.add(tfLeukocyty);
+		JPanel dataP = new JPanel();
+		dataP.setLayout(new BorderLayout());
+		dataP.add(lData, BorderLayout.WEST);
+		dataP.add(calendar, BorderLayout.EAST);
+		
+		JTextField tfLeukocyty=new JTextField(15);
+		tfLeukocyty.setEditable(false);
 		lLeukocyty=new JLabel("Leukocyty");
-		//lLeukocyty.setBounds(20,20,150,20);
-		panelBadanie.add(lLeukocyty);
+		JPanel leukP = new JPanel();
+		leukP.setLayout(new BorderLayout());
+		
+		leukP.add(lLeukocyty, BorderLayout.WEST);
+		leukP.add(tfLeukocyty, BorderLayout.EAST);
 		
 		
-		JTextField tfNeutrofile=new JTextField(30);
-		panelBadanie.add(tfNeutrofile);
+		JTextField tfNeutrofile=new JTextField(15);
 		lNeutrofile=new JLabel("Neutrofile");
-		//lNeutrofile.setBounds(20,20,150,20);
-		panelBadanie.add(lNeutrofile);
+		tfNeutrofile.setEditable(false);
+		JPanel neutP = new JPanel();
+		neutP.setLayout(new BorderLayout());
+		neutP.add(lNeutrofile, BorderLayout.WEST);
+		neutP.add(tfNeutrofile, BorderLayout.EAST);
+
 		
-		JTextField tfErytrocyty=new JTextField(30); 
-		panelBadanie.add(tfErytrocyty);
+		JTextField tfErytrocyty=new JTextField(15); 
 		lErytrocyty=new JLabel("Erytrocyty");
-		//lErytrocyty.setBounds(20,20,150,20);
-		panelBadanie.add(lErytrocyty);
+		tfErytrocyty.setEditable(false);
 		
+		JPanel erytP = new JPanel();
+		erytP.setLayout(new BorderLayout());
+		erytP.add(lErytrocyty, BorderLayout.WEST);
+		erytP.add(tfErytrocyty, BorderLayout.EAST);
+		
+		leukNeutEryt.add(leukP, BorderLayout.NORTH);
+		leukNeutEryt.add(neutP, BorderLayout.CENTER);
+		leukNeutEryt.add(erytP, BorderLayout.SOUTH);
 		
 		JButton bZapiszBadanie=new JButton("Zapisz");
-		panelBadanie.add(bZapiszBadanie);
 		JButton bAnulujBadanie=new JButton("Anuluj");
-		panelBadanie.add(bAnulujBadanie);
+		
+		JPanel zapAnulBadP = new JPanel();
+		zapAnulBadP.setLayout(new BorderLayout());
+		zapAnulBadP.add(bZapiszBadanie, BorderLayout.EAST);
+		zapAnulBadP.add(bAnulujBadanie, BorderLayout.WEST);
+		
+		panelBadanie.add(dataP,BorderLayout.NORTH);
+		panelBadanie.add(leukNeutEryt,BorderLayout.CENTER);
+		panelBadanie.add(zapAnulBadP,BorderLayout.SOUTH);
 		
 		bAnulujDane.addActionListener(new ActionListener(){
 
@@ -187,6 +213,19 @@ public class Gui extends JFrame
 			}
 			
 		});
+		bAnulujBadanie.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				tfLeukocyty.setText("");
+				tfNeutrofile.setText("");
+				tfErytrocyty.setText("");	
+				tfImie.setEditable(false);
+				tfNazwisko.setEditable(false);
+				tfPesel.setEditable(false);
+			}
+			
+		});
 		
 		
 		//PANEL LISTY PACJENTOW
@@ -196,7 +235,12 @@ public class Gui extends JFrame
 				//panelLista.setBounds(300, 0, 450, 500);
 				
 				Object[] columnNames = { "Imie i nazwisko", "Plec", "Pesel", "Ubezpieczenie", "Badanie" };
-				JTable tableLista= new JTable();
+				JTable tableLista= new JTable(){
+					private static final long serialVersionUID = 1L;
+					public boolean isCellEditable(int row, int column){
+						return false;
+					};
+				};
 					
 				
 //				if(TestResults.getTestState_()==0 ){
@@ -215,7 +259,6 @@ public class Gui extends JFrame
 		        jpTemp2.add(tableLista.getTableHeader(), BorderLayout.NORTH); 
 		        JCheckBox check= new JCheckBox();
 		        tableLista.getColumnModel().getColumn(4).setCellEditor(new DefaultCellEditor(check)); 
-		        
 		        ListSelectionModel selectionModel = tableLista.getSelectionModel();
 		        selectionModel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
@@ -233,7 +276,16 @@ public class Gui extends JFrame
 		            		radioM.setSelected(true);
 		            	else 
 		            		radioK.setSelected(true);
+		            	try{
+		            	Integer[] testData = dataBase.bloodCellsAnddataValue(model.getValueAt(SelectedRawIndex, 2).toString());
+		            	tfLeukocyty.setText(testData[3].toString());
+		            	tfNeutrofile.setText(testData[4].toString());
+		            	tfErytrocyty.setText(testData[5].toString());
+		            	}  catch (Exception e) {
+		            		System.out.println(e);
+						}
 		            	
+		            	EditData = 1;
 		            }
 		        });
 		        
@@ -244,12 +296,39 @@ public class Gui extends JFrame
 						try{
 							Object[] row = new Object[5];
 							PatientData newPatientData = new PatientData(tfImie.getText(), tfNazwisko.getText(),bg.getSelection().getActionCommand().toString(), comboUbezpieczenie.getSelectedItem().toString());
-							dataBase.addPatient(setIdNumber_(tfPesel.getText()), newPatientData);
+							dataBase.addPatient(setIdNumber_(tfPesel.getText()), newPatientData,EditData);
 							row = dataBase.returnDataTable(tfPesel.getText()); 
 							JCheckBox check= new JCheckBox();
+							check.isVisible();
 					        row[4] = check;
-							model.addRow(row);
-							//dataBase.printAllPatients();
+					        if(EditData == 0)
+					        	model.addRow(row);
+					        else{
+					        	model.setValueAt(row[0], SelectedRawIndex, 0);
+					        	model.setValueAt(row[1], SelectedRawIndex, 1);
+					        	model.setValueAt(row[2], SelectedRawIndex, 2);
+					        	model.setValueAt(row[3], SelectedRawIndex, 3);
+					        	model.setValueAt(row[4], SelectedRawIndex, 4);
+					        }
+							} catch (Exceptions zleNazwisko) {
+							} catch (Exception e1){
+								new Window("Wybierz plec");
+							}
+						EditData = 0;
+					}
+			    } );
+		        
+		        bZapiszBadanie.addActionListener(new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						check.isSelected();
+						try{
+							TestResults newTest = new TestResults(11,12,12, Integer.parseInt(tfLeukocyty.getText()), Integer.parseInt(tfNeutrofile.getText()),Integer.parseInt(tfErytrocyty.getText()), 1);
+							dataBase.addTestResults(setIdNumber_(tfPesel.getText()), newTest);
+							//row = dataBase.returnDataTable(tfPesel.getText()); 
+							JCheckBox check= new JCheckBox();
+							check.setSelected(true);
+							model.setValueAt(check, SelectedRawIndex, 4);							
 							} catch (Exceptions zleNazwisko) {
 							} catch (Exception e1){
 								new Window("Wybierz plec");
@@ -261,19 +340,54 @@ public class Gui extends JFrame
 		        panelLista.add(tableLista2);
 		        
 		        JPanel bDaU = new JPanel();
+		        bDaU.setLayout(new BorderLayout());
 		        JButton bDodaj=new JButton("Dodaj");
 		        bDaU.add(bDodaj, BorderLayout.WEST);
-				JButton bUsun=new JButton("Usuń");
+				JButton bUsun=new JButton("Usun");
 				bDaU.add(bUsun,BorderLayout.EAST);
 		        panelLista.add(bDaU, BorderLayout.SOUTH);
 		        
+		        bDodaj.addActionListener(new ActionListener(){
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						tfImie.setText("");
+						tfNazwisko.setText("");
+						tfPesel.setText("");
+						radioK.setSelected(false);
+						radioM.setSelected(false);	
+						tfLeukocyty.setText("");
+						tfErytrocyty.setText("");
+						tfNeutrofile.setText("");;
+						tfImie.setEditable(true);
+						tfNazwisko.setEditable(true);
+						tfPesel.setEditable(true);
+						tfLeukocyty.setEditable(true);
+						tfNeutrofile.setEditable(true);
+						tfErytrocyty.setEditable(true);
+					}
+					
+				});
+		        
 		        bUsun.addActionListener(new ActionListener(){
-
 					@Override
 					public void actionPerformed(ActionEvent e) {
 						try {
 							dataBase.removePatient(tfPesel.getText());
 							((DefaultTableModel)tableLista.getModel()).removeRow(SelectedRawIndex);
+							tfImie.setText("");
+							tfNazwisko.setText("");
+							tfPesel.setText("");
+							radioK.setSelected(false);
+							radioM.setSelected(false);	
+							tfLeukocyty.setText("");
+							tfErytrocyty.setText("");
+							tfNeutrofile.setText("");;
+							tfImie.setEditable(false);
+							tfNazwisko.setEditable(false);
+							tfPesel.setEditable(false);
+							tfLeukocyty.setEditable(false);
+							tfNeutrofile.setEditable(false);
+							tfErytrocyty.setEditable(false);
 						} catch (Exceptions e1) {
 						}
 						
@@ -283,9 +397,12 @@ public class Gui extends JFrame
 		        
 		
 		//DODANIE PANELI
-		addComponentFrame(gbc, panelDane,  0, 0, 1, 1, GridBagConstraints.NORTH, GridBagConstraints.BOTH);
-		addComponentFrame(gbc, panelBadanie, 0, 1, 1, 1, GridBagConstraints.SOUTH, GridBagConstraints.BOTH);
-		addComponentFrame(gbc, panelLista, 2,0, 2, 2, GridBagConstraints.CENTER, GridBagConstraints.BOTH);
+		JPanel wynikiBadanP = new JPanel();
+		wynikiBadanP.setLayout(new BorderLayout());
+		wynikiBadanP.add(panelDane, BorderLayout.NORTH);
+		wynikiBadanP.add(panelBadanie, BorderLayout.SOUTH);
+		gbc.add(wynikiBadanP,BorderLayout.WEST);
+		gbc.add(panelLista, BorderLayout.CENTER);
 		gbc.setSize(700, 500);
 		gbc.setVisible(true);
 		
