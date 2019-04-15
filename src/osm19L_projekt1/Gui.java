@@ -166,7 +166,7 @@ public class Gui extends JFrame
 		
 		
 		
-/********************************* KALENDARZ ********************************************/
+		/********************************* KALENDARZ ********************************************/
 		lData=new JLabel("Data");
 		
 		JXDatePicker picker = new JXDatePicker();
@@ -308,19 +308,8 @@ public class Gui extends JFrame
 		            		radioK.setSelected(true);
 		            	try{
 		            	Integer[] testData = dataBase.bloodCellsAnddataValue(model.getValueAt(SelectedRawIndex, 2).toString());
-		            	
-		            	if(testData[3]<4000 || testData[3]>10000)
-		            		tfLeukocyty.setBackground(Color.RED);
-		            	else tfErytrocyty.setBackground(Color.WHITE);
 		            	tfLeukocyty.setText(testData[3].toString());
-		            	if(testData[4]>1000)
-		            		tfNeutrofile.setBackground(Color.RED);
-		            	else tfNeutrofile.setBackground(Color.WHITE);
 		            	tfNeutrofile.setText(testData[4].toString());
-		            	if(testData[5]<3800000 || testData[5]>5600000)
-		            		tfErytrocyty.setBackground(Color.RED);
-		            	else tfErytrocyty.setBackground(Color.WHITE);
-		    
 		            	tfErytrocyty.setText(testData[5].toString());
 		            	}  catch (Exception e) {
 		            		System.out.println(e);
