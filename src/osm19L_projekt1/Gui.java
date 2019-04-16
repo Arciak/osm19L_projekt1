@@ -71,38 +71,27 @@ public class Gui extends JFrame
 		
 		JPanel imieNazPesel = new JPanel();
 		imieNazPesel.setLayout(new BorderLayout());
-//		panelDane.setPreferredSize(new Dimension(200,500));
-		
 		
 		
 		JLabel lImie, lNazwisko, lPesel, lPlec, lUbezpieczenie;
 		JPanel imeP = new JPanel();
 		lImie=new JLabel("Imie");
-		//lImie.setBounds(20,20,150,20);
-		//panelDane.add(lImie);
 		JTextField tfImie=new JTextField(15);
 		tfImie.setEditable(false);
-		//panelDane.add(tfImie);
 		imeP.add(lImie, BorderLayout.WEST);
 		imeP.add(tfImie, BorderLayout.EAST);
 		
 		JPanel nazP = new JPanel();
 		lNazwisko=new JLabel("Nazwisko");
-		//lNazwisko.setBounds(20,20,150,20);
-		//panelDane.add(lNazwisko);
 		JTextField tfNazwisko=new JTextField(15);
 		tfNazwisko.setEditable(false);
-		//panelDane.add(tfNazwisko);
 		nazP.add(lNazwisko, BorderLayout.WEST);
 		nazP.add(tfNazwisko, BorderLayout.EAST);
 		
 		JPanel peselP = new JPanel();
 		lPesel=new JLabel("Pesel");
-		//lPesel.setBounds(20,20,150,20);
-		//panelDane.add(lPesel);
 		JTextField tfPesel=new JTextField(15); 
 		tfPesel.setEditable(false);
-		//panelDane.add(tfPesel);
 		peselP.add(lPesel,BorderLayout.WEST);
 		peselP.add(tfPesel,BorderLayout.EAST);
 		
@@ -115,39 +104,32 @@ public class Gui extends JFrame
 		plecUbezBut.setLayout(new BorderLayout());
 		JPanel plecP= new JPanel();
 		lPlec=new JLabel("Plec");
-		//lPlec.setBounds(20,20,150,20);
-		//panelDane.add(lPlec);
 		JRadioButton radioK=new JRadioButton("Kobieta");    
 		radioK.setActionCommand("K");
-		JRadioButton radioM=new JRadioButton("Meczyzna");  
+		JRadioButton radioM=new JRadioButton("Mezczyzna");  
 		radioM.setActionCommand("M");
 		radioK.setBounds(75,50,100,30);    
 		radioM.setBounds(100,50,100,30);    
 		ButtonGroup bg=new ButtonGroup();    
 		bg.add(radioK);bg.add(radioM);    
-		//panelDane.add(radioK);panelDane.add(radioM); 
 		plecP.add(lPlec,BorderLayout.WEST);
 		plecP.add(radioK, BorderLayout.CENTER);
 		plecP.add(radioM, BorderLayout.EAST);
 		
 		JPanel ubezP = new JPanel();
 		lUbezpieczenie=new JLabel("Ubezpieczenie");
-		//lUbezpieczenie.setBounds(20,20,150,20);
-		//panelDane.add(lUbezpieczenie);		
 		JComboBox<String> comboUbezpieczenie = new JComboBox<String>();
 		comboUbezpieczenie.addItem("NFZ");
 		comboUbezpieczenie.addItem("Prywatnie");
 		comboUbezpieczenie.addItem("Brak");
-		//panelDane.add(comboUbezpieczenie);
 		ubezP.add(lUbezpieczenie, BorderLayout.WEST);
 		ubezP.add(comboUbezpieczenie, BorderLayout.EAST);
 		
 		JPanel zapAnulP = new JPanel();
 		JButton bZapiszDane=new JButton("Zapisz");
-		//panelDane.add(bZapiszDane);
+
 		
 		JButton bAnulujDane=new JButton("Anuluj");
-		//panelDane.add(bAnulujDane);
 		zapAnulP.add(bZapiszDane, BorderLayout.EAST);
 		zapAnulP.add(bAnulujDane, BorderLayout.WEST);
 		
@@ -157,20 +139,11 @@ public class Gui extends JFrame
 		
 		panelDane.add(imieNazPesel,BorderLayout.CENTER);
 		panelDane.add(plecUbezBut,BorderLayout.SOUTH);
-		
-//		GridBagLayout layoutDane= new GridBagLayout();
-//		panelDane.setLayout(layoutDane);
-//		GridBagConstraints gbcDane=new GridBagConstraints();
-//		gbcDane.fill=GridBagConstraints.HORIZONTAL;
-//		GridLayout layoutBadanie= new GridLayout(4,2);
-//		panelDane.setPreferredSize(new Dimension(200,500));
-//		panelDane.setLayout(layoutBadanie);
-//		
+
 		//PANEL BADANIA
 		JPanel panelBadanie=new JPanel();
 		panelBadanie.setBorder(BorderFactory.createTitledBorder("Badanie")) ;
 		panelBadanie.setLayout(new BorderLayout());
-		//panelBadanie.setPreferredSize(new Dimension(200,500));
 		JPanel leukNeutEryt= new JPanel();
 		JLabel lData, lLeukocyty, lNeutrofile, lErytrocyty;
 		
@@ -191,8 +164,6 @@ public class Gui extends JFrame
 		dataP.setLayout(new BorderLayout());
 		dataP.add(lData, BorderLayout.WEST);
 		dataP.add(picker, BorderLayout.CENTER);
-		//dataP.add(calendar, BorderLayout.EAST);
-		//dataP.add(datePicker,BorderLayout.WEST);
 		
 		JTextField tfLeukocyty=new JTextField(15);
 		tfLeukocyty.setEditable(false);
@@ -269,7 +240,7 @@ public class Gui extends JFrame
 				JPanel panelLista=new JPanel();
 				panelLista.setLayout(new BorderLayout());
 				panelLista.setBorder(BorderFactory.createTitledBorder("Lista pacjentow")) ;
-				//panelLista.setBounds(300, 0, 450, 500);
+
 				
 				Object[] columnNames = { "Imie i nazwisko", "Plec", "Pesel", "Ubezpieczenie", "Badanie" };
 				JTable tableLista= new JTable(){
@@ -279,13 +250,7 @@ public class Gui extends JFrame
 					};
 				};
 					
-				
-//				if(TestResults.getTestState_()==0 ){
-//		        	   check.setSelected(false);
-//		        	} else {
-//		        	   check.setSelected(true);
-//		        	}
-//		        tableLista.getColumnModel().getColumn(4).setCellEditor(new DefaultCellEditor(check)); 
+
 				
 				DefaultTableModel model = new DefaultTableModel();
 		        model.setColumnIdentifiers(columnNames);
