@@ -53,6 +53,16 @@ public class Gui extends JFrame
 		JFrame gbc = new JFrame("Rejestracja wynikow badan");
 	    gbc.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	    gbc.setLayout(new BorderLayout());
+	    
+	    JMenuBar mb=new JMenuBar();
+	    JMenuItem mi=new JMenuItem("Zamknij");
+	    mb.add(mi);
+	    gbc.setJMenuBar(mb);
+	    mi.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				System.exit(0);
+			}
 		
 		//PANEL DANYCH PACJENTA
 		JPanel panelDane=new JPanel();
