@@ -58,11 +58,12 @@ public class Gui extends JFrame
 	    JMenuItem mi=new JMenuItem("Zamknij");
 	    mb.add(mi);
 	    gbc.setJMenuBar(mb);
-	    mi.addActionListener(new ActionListener(){
+	    mi.addActionListener(new ActionListener()
+	    {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				System.exit(0);
-			}
+			}});
 		
 		//PANEL DANYCH PACJENTA
 		JPanel panelDane=new JPanel();
