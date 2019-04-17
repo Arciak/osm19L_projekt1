@@ -29,5 +29,5 @@ Nacisniecie przycisku „Anuluj” czysci formularz.
 
 **Panel Badania:**
 Wypelnienie formularza danymi i nacisniecie przycisku „Zapisz” w panelu badania powoduje dodatnie wynikow badan do wybranego pacjenta (jezeli
-nie zostały one wcześniej wprowadzone) lub modyfikację już istniejących wyników. Ponadto sygnalizowane jest wykroczenie wartosci parametrow poza zakres normy.
+nie zostały one wcześniej wprowadzone) lub modyfikację już istniejących wyników. Ponadto sygnalizowane jest wykroczenie wartosci parametrow poza zakres normy (przkroczenie normy powoduje zmiane tla pola tekstowego z bialego na czerwony).
 
