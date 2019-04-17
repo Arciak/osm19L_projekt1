@@ -3,22 +3,11 @@ package osm19L_projekt1;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-//import java.time.format.DateTimeFormatter;
-
-//import java.util.*;
-
-//import com.toedter.calendar.JCalendar;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-//import javax.swing.BoxLayout;
-//import javax.swing.border.Border;
 import javax.swing.table.DefaultTableModel;
-
-//import org.jdatepicker.impl.JDatePanelImpl;
-//import org.jdatepicker.impl.JDatePickerImpl;
-//import org.jdatepicker.impl.UtilDateModel;
 import org.jdesktop.swingx.JXDatePicker;
-//import org.jdatepicker.*;
+
 
 
 import helpers.Exceptions;
@@ -26,13 +15,11 @@ import helpers.GlobalVariables;
 import helpers.Window;
 
 import java.text.DateFormat;
-//import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 public class Gui extends JFrame 
 {
-	//private JDatePickerImpl datePicker;
 	
 	private String setIdNumber_(String idNumber_) throws Exceptions {	
 		if (idNumber_.matches("[0-9]+") == true) {
@@ -54,10 +41,8 @@ public class Gui extends JFrame
 	{	
 		JFrame gbc = new JFrame("Rejestracja wynikow badan");
 	    gbc.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	    BoxLayout boxLayout = new BoxLayout(gbc.getContentPane(), BoxLayout.X_AXIS); // top to bottom
+	    BoxLayout boxLayout = new BoxLayout(gbc.getContentPane(), BoxLayout.X_AXIS);
 	    gbc.setLayout(boxLayout);
-	    
-	    //gbc.setLayout(new BorderLayout());
 	    
 	    JMenuBar mb=new JMenuBar();
 	    JMenuItem mi=new JMenuItem("Zamknij");
@@ -77,10 +62,8 @@ public class Gui extends JFrame
 		
 		JPanel imieNazPesel = new JPanel();
 		
-		
-		
-		
 		JLabel lImie, lNazwisko, lPesel, lPlec, lUbezpieczenie;
+		
 		JPanel imeP = new JPanel();
 		lImie=new JLabel("Imie");
 		JTextField tfImie=new JTextField(15);
@@ -147,8 +130,8 @@ public class Gui extends JFrame
 
 		
 		JButton bAnulujDane=new JButton("Anuluj");
-		zapAnulP.add(bZapiszDane, BorderLayout.EAST);
-		zapAnulP.add(bAnulujDane, BorderLayout.WEST);
+		zapAnulP.add(bZapiszDane);
+		zapAnulP.add(bAnulujDane);
 		
 		plecUbezBut.add(plecP,BorderLayout.NORTH);
 		plecUbezBut.add(ubezP, BorderLayout.CENTER);
@@ -222,8 +205,8 @@ public class Gui extends JFrame
 		JPanel zapAnulBadP = new JPanel();
 		JButton bZapiszBadanie=new JButton("Zapisz");
 		JButton bAnulujBadanie=new JButton("Anuluj");
-		zapAnulBadP.add(bZapiszBadanie, BorderLayout.EAST);
-		zapAnulBadP.add(bAnulujBadanie, BorderLayout.WEST);
+		zapAnulBadP.add(bZapiszBadanie);
+		zapAnulBadP.add(bAnulujBadanie);
 		
 		panelBadanie.add(dataP,BorderLayout.NORTH);
 		panelBadanie.add(leukNeutEryt,BorderLayout.CENTER);
@@ -383,7 +366,6 @@ public class Gui extends JFrame
 		        panelLista.add(tableLista2);
 		        
 		        JPanel bDaU = new JPanel();
-		        //bDaU.setLayout(new BorderLayout());
 		        JButton bDodaj=new JButton("Dodaj");
 		        bDaU.add(bDodaj);
 				JButton bUsun=new JButton("Usun");
